@@ -5,8 +5,8 @@ const ButtonComponent = ({onPress, title}) => {
     const [isPressed, setIsPressed] = useState(false);
 
     const handlePress = () => {
-        setIsPressed(true);
-        onPress && onPress();
+        setIsPressed(!isPressed);
+        if (onPress) onPress();
     };
     const buttonStyle = {
         ...styles.button,
