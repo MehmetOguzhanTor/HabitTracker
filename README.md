@@ -1,3 +1,25 @@
-# HabitTracker
+# Habit Tracker
 
-The very first thing I did was to install Node.js. Then I had to Install Expo CLI. Then I cloned the repo into a folder and run npm install command to install the necessary dependencies. Then I ran expo start command to start the app.
+In this project, I am creating a Habit Tracker App to follow my daily habits from my phone. You can follow the steps to run this app on your phone.
+
+## Installation
+
+Use the link to download Node.js
+
+'https://nodejs.org/en/download/current'
+
+Then install Expo CLI
+
+'npm install -g expo-cli'
+
+Clone the Project repository
+
+'git clone https://github.com/MehmetOguzhanTor/HabitTracker.git'
+
+Installing the necessay depencies
+
+'npm install'
+
+Starting the app
+
+'expo start'
