@@ -6,20 +6,30 @@ In this project, I am creating a Habit Tracker App to follow my daily habits fro
 
 Use the link to download Node.js
 
-'https://nodejs.org/en/download/current'
+```bash
+https://nodejs.org/en/download/current
+```
 
 Then install Expo CLI
 
-'npm install -g expo-cli'
+```bash
+npm install -g expo-cli
+```
 
 Clone the Project repository
 
-'git clone https://github.com/MehmetOguzhanTor/HabitTracker.git'
+```bash
+git clone https://github.com/MehmetOguzhanTor/HabitTracker.git
+```
 
 Installing the necessay depencies
 
-'npm install'
+```bash
+npm install
+```
 
 Starting the app
 
-'expo start'
+```bash
+expo start
+```
