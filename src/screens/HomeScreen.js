@@ -12,12 +12,19 @@ const HomeScreen = () => {
                 styles.container,
                 {flexDirection: 'row'},
             ]}>
-            <View style={{flex: 1, backgroundColor: 'powderblue'}}>
+            <View style={[
+                styles.buttonContainer,
+                {flex: 1, backgroundColor: 'powderblue'}
+            ]}>
+                
             <ButtonComponent onPress={handlePress} />
             <ButtonComponent onPress={handlePress} />
             <ButtonComponent onPress={handlePress} />
             </View>
-            <View style={{flex: 1, backgroundColor: 'skyblue'}}>
+            <View style={[
+                styles.buttonContainer,
+                {flex: 1, backgroundColor: 'skyblue'}
+            ]}>
             <ButtonComponent onPress={handlePress} />
             <ButtonComponent onPress={handlePress} />
             <ButtonComponent onPress={handlePress} />
@@ -31,6 +38,13 @@ const styles = {
         flex: 1,
         padding: 20,
     },
+    buttonContainer: {
+        margin: 0,
+        justifyContent: 'center',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        
+      },
 };
 
 export default HomeScreen;
