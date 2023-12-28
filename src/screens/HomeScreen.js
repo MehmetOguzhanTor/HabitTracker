@@ -6,8 +6,8 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ButtonComponent  
-        title="Go to Another Screen" 
-        onPress={() => navigation.navigate('AnotherScreen')} 
+        title="Go to Habit options" 
+        onPress={() => navigation.navigate('Habitoptions')} 
       />
     </View>
   );

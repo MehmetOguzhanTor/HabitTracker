@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const AnotherScreen = () => {
+const Habitoptions = () => {
   return (
     <View style={styles.container}>
-      <Text>Welcome to Another Screen!</Text>
+      <Text>Welcome to Habit Options!</Text>
     </View>
   );
 };
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AnotherScreen;
+export default Habitoptions;
