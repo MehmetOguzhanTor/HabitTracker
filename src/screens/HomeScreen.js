@@ -1,50 +1,24 @@
-import React from "react";
-import {View} from "react-native";
-import ButtonComponent from "../components/Button";
+import React from 'react';
+import { View, Button, StyleSheet } from 'react-native';
+import ButtonComponent  from '../components/Button';
 
-const HomeScreen = () => {
-    const handlePress = () => {
-        console.log("Hello World");
-    };
-    return (
-        <View
-            style={[
-                styles.container,
-                {flexDirection: 'row'},
-            ]}>
-            <View style={[
-                styles.buttonContainer,
-                {flex: 1, backgroundColor: 'powderblue'}
-            ]}>
-                
-            <ButtonComponent onPress={handlePress} />
-            <ButtonComponent onPress={handlePress} />
-            <ButtonComponent onPress={handlePress} />
-            </View>
-            <View style={[
-                styles.buttonContainer,
-                {flex: 1, backgroundColor: 'skyblue'}
-            ]}>
-            <ButtonComponent onPress={handlePress} />
-            <ButtonComponent onPress={handlePress} />
-            <ButtonComponent onPress={handlePress} />
-            </View>
-        </View>
-    );
+const HomeScreen = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      <ButtonComponent  
+        title="Go to Another Screen" 
+        onPress={() => navigation.navigate('AnotherScreen')} 
+      />
+    </View>
+  );
 };
 
-const styles = {
-    container: {
-        flex: 1,
-        padding: 20,
-    },
-    buttonContainer: {
-        margin: 0,
-        justifyContent: 'center',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        
-      },
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default HomeScreen;
