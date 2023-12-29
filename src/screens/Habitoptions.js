@@ -7,9 +7,10 @@ const options = [
   { id: 3, name: "Drink Water" },
 ];
 
-const Habitoptions = () => {
-  const handleSelectOption = (optionName) => {
-    console.log(`Selected option: ${optionName}`); 
+const Habitoptions = ({ navigation }) => {
+  const handleSelectOption = (option) => {
+    //console.log(`Selected option: ${optionName}`); 
+    navigation.navigate('Home', { selectedHabit: option });
   };
   const renderOptionItem = ({ item }) => (
     <TouchableOpacity 
