@@ -1,10 +1,34 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 
-const Habitoptions = () => {
+const options = [
+  { id: 1, name: "Exercise" },
+  { id: 2, name: "Read a Book" },
+  { id: 3, name: "Drink Water" },
+];
+
+const Habitoptions = ({ navigation }) => {
+  const handleSelectOption = (option) => {
+    //console.log(`Selected option: ${optionName}`); 
+    navigation.navigate('Home', { selectedHabit: option });
+  };
+  const renderOptionItem = ({ item }) => (
+    <TouchableOpacity 
+      style={styles.optionItem} 
+      onPress={() => handleSelectOption(item.name)}
+    >
+      <Text style={styles.optionText}>{item.name}</Text>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
-      <Text>Welcome to Habit Options!</Text>
+      <Text style={styles.header}>Welcome to Habit Options!</Text>
+      <FlatList
+        data={options}
+        renderItem={renderOptionItem}
+        keyExtractor={item => item.id.toString()}
+      />
     </View>
   );
 };
@@ -12,8 +36,22 @@ const Habitoptions = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingTop: 20,
+    paddingHorizontal: 10,
+  },
+  header: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  optionItem: {
+    padding: 15,
+    marginVertical: 5,
+    backgroundColor: 'lightblue',
+    borderRadius: 5,
+  },
+  optionText: {
+    fontSize: 18,
   },
 });
 
