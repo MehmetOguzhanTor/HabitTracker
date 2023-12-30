@@ -9,9 +9,9 @@ const options = [
 
 const Habitoptions = ({ navigation }) => {
   const handleSelectOption = (option) => {
-    //console.log(`Selected option: ${optionName}`); 
     navigation.navigate('Home', { selectedHabit: option });
   };
+  
   const renderOptionItem = ({ item }) => (
     <TouchableOpacity 
       style={styles.optionItem} 
