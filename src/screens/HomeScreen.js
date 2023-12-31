@@ -13,30 +13,33 @@ const HomeScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <ButtonComponent  
-        title="Go to Habit options" 
-        onPress={() => navigation.navigate('Habitoptions')} 
-      />
-      {selectedHabit && (
+            <ButtonComponent onPress={() => navigation.navigate('Habitoptions')}>
+              <Text style={styles.plusStyle}>+</Text>
+              <Text style={styles.buttonTextStyle}></Text>
+              <Text style={styles.buttonTextStyle}>New Habit</Text>
+            </ButtonComponent>
+            {selectedHabit && (
         <Text style={styles.selectedHabitText}>
           Selected Habit: {route.params?.selectedHabit}
         </Text>
       )}
-    </View>
+        </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  plusStyle: {
+    fontSize: 160, 
+    color: 'white',
+},
   selectedHabitText: {
     marginTop: 20,
     fontSize: 18,
     fontWeight: 'bold',
     color: 'red',
+  },
+  buttonTextStyle: {
+    fontSize: 18,
   },
 });
 
