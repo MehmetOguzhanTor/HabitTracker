@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Button, Text, StyleSheet } from 'react-native';
+import { View, Button, Text, StyleSheet, ScrollView } from 'react-native';
 import ButtonComponent  from '../components/Button';
 
 const HomeScreen = ({ navigation, route }) => {
-  const [selectedHabit, setSelectedHabit] = useState(null);
+  const [selectedHabits, setSelectedHabits] = useState([]);
 
   useEffect(() => {
     if (route.params?.selectedHabit) {
-      setSelectedHabit(route.params.selectedHabit);
+      setSelectedHabits(prevHabits => [...prevHabits, route.params.selectedHabit.name]);
     }
   }, [route.params?.selectedHabit]);
 
@@ -18,16 +18,24 @@ const HomeScreen = ({ navigation, route }) => {
         <Text style={styles.buttonTextStyle}></Text>
         <Text style={styles.buttonTextStyle}>New Habit</Text>
       </ButtonComponent>
-        {selectedHabit && (
-        <Text style={styles.selectedHabitText}>
-          Selected Habit: {route.params?.selectedHabit}
-        </Text>
-      )}
+      <ScrollView style={styles.habitsList}>
+        {selectedHabits.map((habit, index) => (
+          <Text key={index} style={styles.selectedHabitText}>
+            {habit}
+          </Text>
+        ))}
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start', 
+    paddingTop: 20, 
+},
   plusStyle: {
     fontSize: 160, 
     color: 'white',
@@ -40,6 +48,11 @@ const styles = StyleSheet.create({
   },
   buttonTextStyle: {
     fontSize: 18,
+    fontWeight: 'bold',
+    color: 'red',
+  },
+  habitsList: {
+    width: '100%', 
   },
 });
 
