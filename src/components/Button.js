@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {TouchableOpacity, Text, StyleSheet} from "react-native";
 
-const ButtonComponent = ({onPress, title}) => {
+const ButtonComponent = ({onPress, title, children }) => {
     const [isPressed, setIsPressed] = useState(false);
 
     const handlePress = () => {
@@ -10,20 +10,24 @@ const ButtonComponent = ({onPress, title}) => {
     };
     const buttonStyle = {
         ...styles.button,
-        backgroundColor: isPressed ? 'red' : 'green',
+        backgroundColor: 'red',
     };
     return (
         <TouchableOpacity onPress={handlePress} style={buttonStyle}>
-        <Text style={styles.buttonText}>{title}</Text>
+            {children || <Text style={styles.buttonText}>{title}</Text>}
         </TouchableOpacity>
+        
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center', // Center the button and text vertically
+    },
     button: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
+        width: 150,
+        height: 150,
+        borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'blue',
@@ -31,6 +35,8 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: 20,
+        textAlign: 'center',
+        marginTop: 10
     },
 });
 
