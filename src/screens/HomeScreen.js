@@ -13,17 +13,17 @@ const HomeScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-            <ButtonComponent onPress={() => navigation.navigate('Habitoptions')}>
-              <Text style={styles.plusStyle}>+</Text>
-              <Text style={styles.buttonTextStyle}></Text>
-              <Text style={styles.buttonTextStyle}>New Habit</Text>
-            </ButtonComponent>
-            {selectedHabit && (
+      <ButtonComponent onPress={() => navigation.navigate('Habitoptions')}>
+        <Text style={styles.plusStyle}>+</Text>
+        <Text style={styles.buttonTextStyle}></Text>
+        <Text style={styles.buttonTextStyle}>New Habit</Text>
+      </ButtonComponent>
+        {selectedHabit && (
         <Text style={styles.selectedHabitText}>
           Selected Habit: {route.params?.selectedHabit}
         </Text>
       )}
-        </View>
+    </View>
   );
 };
 

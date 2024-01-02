@@ -10,7 +10,7 @@ const ButtonComponent = ({onPress, title, children }) => {
     };
     const buttonStyle = {
         ...styles.button,
-        backgroundColor: isPressed ? 'red' : 'red',
+        backgroundColor: 'red',
     };
     return (
         <TouchableOpacity onPress={handlePress} style={buttonStyle}>
@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center', // Center the button and text vertically
     },
-    
     button: {
         width: 150,
         height: 150,
@@ -38,7 +37,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         marginTop: 10
-        
     },
 });
 
