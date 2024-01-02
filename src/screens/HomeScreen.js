@@ -6,10 +6,11 @@ const HomeScreen = ({ navigation, route }) => {
   const [selectedHabits, setSelectedHabits] = useState([]);
 
   useEffect(() => {
-    if (route.params?.selectedHabit) {
-      setSelectedHabits(prevHabits => [...prevHabits, route.params.selectedHabit.name]);
+    if (route.params?.selectedHabit && !selectedHabits.includes(route.params.selectedHabit)) {
+      setSelectedHabits(prevHabits => [...prevHabits, route.params.selectedHabit]);
     }
   }, [route.params?.selectedHabit]);
+  
 
   return (
     <View style={styles.container}>
