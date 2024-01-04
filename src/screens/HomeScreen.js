@@ -38,7 +38,9 @@ const styles = StyleSheet.create({
     paddingTop: 20, 
 },
   plusStyle: {
+    marginTop: 5,
     fontSize: 160, 
+    alignItems: 'center',
     color: 'white',
 },
   selectedHabitText: {
@@ -48,9 +50,10 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   buttonTextStyle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: 'grey',
+    marginTop: 5,
+    color: 'blue',
   },
   habitsList: {
     width: '100%', 

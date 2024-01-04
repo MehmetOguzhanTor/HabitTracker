@@ -10,7 +10,7 @@ const ButtonComponent = ({onPress, title, children }) => {
     };
     const buttonStyle = {
         ...styles.button,
-        backgroundColor: 'grey',
+        backgroundColor: 'blue',
     };
     return (
         <TouchableOpacity onPress={handlePress} style={buttonStyle}>
