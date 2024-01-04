@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Button, Text, StyleSheet, ScrollView } from 'react-native';
 import ButtonComponent  from '../components/Button';
+import HabitButton from '../components/HabitButton';
 
 const HomeScreen = ({ navigation, route }) => {
   const [selectedHabits, setSelectedHabits] = useState([]);
@@ -10,7 +11,6 @@ const HomeScreen = ({ navigation, route }) => {
       setSelectedHabits(prevHabits => [...prevHabits, route.params.selectedHabit]);
     }
   }, [route.params?.selectedHabit]);
-  
 
   return (
     <View style={styles.container}>
@@ -20,10 +20,10 @@ const HomeScreen = ({ navigation, route }) => {
         <Text style={styles.buttonTextStyle}>New Habit</Text>
       </ButtonComponent>
       <ScrollView style={styles.habitsList}>
+      <Text style={styles.buttonTextStyle}></Text>
+      <Text style={styles.buttonTextStyle}></Text>
         {selectedHabits.map((habit, index) => (
-          <Text key={index} style={styles.selectedHabitText}>
-            {habit}
-          </Text>
+          <HabitButton key={index} habitName={habit} />
         ))}
       </ScrollView>
     </View>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'red',
+    color: 'grey',
   },
   habitsList: {
     width: '100%', 
