@@ -4,8 +4,24 @@ import { View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput, Button }
 const Habitoptions = ({ navigation }) => {
   const [options, setOptions] = useState([
     { id: 1, name: "Exercise" },
-    { id: 2, name: "Read a Book" },
-    { id: 3, name: "Drink Water" },
+    { id: 2, name: "Morning Stretching" },
+    { id: 3, name: "Walk" },
+    { id: 4, name: "Eat Healthy" },
+    { id: 5, name: "Wake Up Early" },
+    { id: 6, name: "Read" },
+    { id: 7, name: "Write in Journal" },
+    { id: 8, name: "Meditate" },
+    { id: 9, name: "Limited Screen Time" },
+    { id: 10, name: "Compleate Daily To-Do List" },
+    { id: 11, name: "Study" },
+    { id: 12, name: "Spend Time with Family" },
+    { id: 13, name: "Connect with Friends:" },
+    { id: 14, name: "Express Gratitude" },
+    { id: 15, name: "Networking" },
+    { id: 16, name: "Cooking" },
+    { id: 17, name: "Outdoor Time" },
+    { id: 18, name: "Watch a Movie" },
+    
   ]);
   const [newHabit, setNewHabit] = useState('');
 
