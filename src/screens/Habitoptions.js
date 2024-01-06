@@ -21,7 +21,6 @@ const Habitoptions = ({ navigation }) => {
     { id: 16, name: "Cooking" },
     { id: 17, name: "Outdoor Time" },
     { id: 18, name: "Watch a Movie" },
-    
   ]);
   const [newHabit, setNewHabit] = useState('');
 
@@ -33,8 +32,12 @@ const Habitoptions = ({ navigation }) => {
     if (newHabit.trim() === '') return;
 
     const newId = options.length + 1;
-    setOptions([...options, { id: newId, name: newHabit }]);
+    const newOption = { id: newId, name: newHabit };
+
+    setOptions([...options, newOption]);
     setNewHabit('');
+
+    navigation.navigate('Home', { selectedHabit: newOption.name });
   };
   
   const renderOptionItem = ({ item }) => (
