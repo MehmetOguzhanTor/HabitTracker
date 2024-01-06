@@ -1,59 +1,30 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Button } from 'react-native';
+
+const habitCategories = {
+  'Health and Fitness': ['Exercise', 'Morning Stretching', 'Walk', 'Eat Healthy', 'Cycle', 'Swim', 'Work Out', 'Brush Your Teeth', ],
+  'Personal Growth': ['Read', 'Write in Journal', 'Meditate', 'Limited Screen Time'],
+  'Productivity': ['Complete Daily To-Do List', 'Study'],
+  'Social and Family': ['Spend Time with Family', 'Connect with Friends', 'Express Gratitude'],
+  'Leisure': ['Cooking', 'Outdoor Time', 'Watch a Movie'],
+};
 
 const Habitoptions = ({ navigation }) => {
-  const [options, setOptions] = useState([
-    { id: 1, name: "Exercise" },
-    { id: 2, name: "Morning Stretching" },
-    { id: 3, name: "Walk" },
-    { id: 4, name: "Eat Healthy" },
-    { id: 5, name: "Wake Up Early" },
-    { id: 6, name: "Read" },
-    { id: 7, name: "Write in Journal" },
-    { id: 8, name: "Meditate" },
-    { id: 9, name: "Limited Screen Time" },
-    { id: 10, name: "Compleate Daily To-Do List" },
-    { id: 11, name: "Study" },
-    { id: 12, name: "Spend Time with Family" },
-    { id: 13, name: "Connect with Friends:" },
-    { id: 14, name: "Express Gratitude" },
-    { id: 15, name: "Networking" },
-    { id: 16, name: "Cooking" },
-    { id: 17, name: "Outdoor Time" },
-    { id: 18, name: "Watch a Movie" },
-  ]);
   const [newHabit, setNewHabit] = useState('');
-
-  const handleSelectOption = (option) => {
-    navigation.navigate('Home', { selectedHabit: option });
-  };
-
+  const [expandedCategory, setExpandedCategory] = useState('');
   const addNewHabit = () => {
     if (newHabit.trim() === '') return;
+      const newId = options.length + 1;
 
-    const newId = options.length + 1;
-    const newOption = { id: newId, name: newHabit };
-
-    setOptions([...options, newOption]);
+    setOptions([...options, { id: newId, name: newHabit }]);
     setNewHabit('');
-
-    navigation.navigate('Home', { selectedHabit: newOption.name });
+    navigation.navigate('Home', { selectedHabit: newHabit.trim() });
   };
-  
-  const renderOptionItem = ({ item }) => (
-    <TouchableOpacity 
-      style={styles.optionItem} 
-      onPress={() => handleSelectOption(item.name)}
-    >
-      <Text style={styles.optionText}>{item.name}</Text>
-    </TouchableOpacity>
-  );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Please Choose or Add a
-       Habit!</Text>
-
+    <ScrollView style={styles.container}>
+      <Text style={styles.header}>Please Choose or Add a Habit!</Text>
+      
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -61,75 +32,107 @@ const Habitoptions = ({ navigation }) => {
           value={newHabit}
           onChangeText={setNewHabit}
         />
-        <TouchableOpacity style={styles.addButton} onPress={addNewHabit}>
-          <Text style={styles.addButtonText}>Add</Text>
-        </TouchableOpacity>
+        <Button title="Add" onPress={addNewHabit} />
       </View>
 
-      <FlatList
-        data={options}
-        renderItem={renderOptionItem}
-        keyExtractor={item => item.id.toString()}
-      />
-    </View>
+      {Object.entries(habitCategories).map(([category, habits]) => (
+        <View key={category}>
+          <TouchableOpacity onPress={() => setExpandedCategory(expandedCategory === category ? '' : category)}>
+            <Text style={styles.category}>{category}</Text>
+          </TouchableOpacity>
+          {expandedCategory === category && habits.map((habit, index) => (
+            <TouchableOpacity key={index} style={styles.optionItem} onPress={() => navigation.navigate('Home', { selectedHabit: habit })}>
+              <Text style={styles.optionText}>{habit}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      ))}
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
-    paddingHorizontal: 10,
+    backgroundColor: '#fafafa',
+    paddingVertical: 25,
+    paddingHorizontal: 20,
   },
   header: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
+    fontSize: 24,
+    fontWeight: '600',
+    color: 'black',
+    textAlign: 'center',
+    marginBottom: 30,
   },
   inputContainer: {
     flexDirection: 'row',
-    marginBottom: 20,
-  },
-  addButton: {
-    backgroundColor: '#3498db',
-    padding: 10,
-    borderRadius: 10,
-    shadowColor: '#2c3e50',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
-    elevation: 2,
-  },
-  addButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  optionItem: {
-    padding: 15,
-    marginVertical: 5,
-    backgroundColor: 'lightblue',
-    borderRadius: 5,
+    alignItems: 'center',
+    marginBottom: 10,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 10,
+    elevation: 6,
   },
   input: {
     flex: 1,
-    borderColor: '#7f8c8d',
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 20,
     marginRight: 10,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     paddingVertical: 8,
     fontSize: 16,
-    backgroundColor: 'white',
-    shadowColor: '#2c3e50',
-    shadowOffset: { width: 0, height: 1 },
+    backgroundColor: '#f5f6fa', //soft grey
+  },
+  addButton: {
+    borderRadius: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.18,
+    shadowRadius: 10,
+    elevation: 6,
+  },
+  addButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  category: {
+    fontSize: 20,
+    fontWeight: '600',
+    backgroundColor: '#3498db', //Bright blue
+    color: 'white',
+    borderRadius: 15,
+    paddingVertical: 18,
+    paddingHorizontal: 25,
+    marginTop: 15,
+    shadowColor: '#2980b9', //Strong blue
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
-    shadowRadius: 1,
-    elevation: 2,
+    shadowRadius: 6,
+    elevation: 4,
+  },
+  optionItem: {
+    backgroundColor: '#ecf0f1', //Light grayish cyan
+    borderRadius: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    marginVertical: 7,
+    shadowColor: '#grey',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   optionText: {
     fontSize: 18,
   },
 });
+
 
 export default Habitoptions;
