@@ -2,15 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { View, Button, Text, StyleSheet, ScrollView } from 'react-native';
 import ButtonComponent  from '../components/Button';
 import HabitButton from '../components/HabitButton';
+import * as Notifications from 'expo-notifications';
 
 const HomeScreen = ({ navigation, route }) => {
   const [selectedHabits, setSelectedHabits] = useState([]);
 
   useEffect(() => {
+    async function requestPermissions() {
+      const { status } = await Notifications.requestPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Please enable notifications to use this feature');
+      }
+    }
+
+    requestPermissions();
+
     if (route.params?.selectedHabit && !selectedHabits.includes(route.params.selectedHabit)) {
-      setSelectedHabits(prevHabits => [...prevHabits, route.params.selectedHabit]);
+      setSelectedHabits(prevHabits => {
+        scheduleNotification(route.params.selectedHabit);
+        return [...prevHabits, route.params.selectedHabit];
+      });
     }
   }, [route.params?.selectedHabit]);
+
+  const scheduleNotification = async (habit) => {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Habit Reminder",
+        body: `Don't forget to complete your habit: ${habit}`,
+      },
+      trigger: { seconds: 60*60 }, // 1 hour
+    });
+  };
 
   return (
     <View style={styles.container}>
