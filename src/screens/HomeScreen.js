@@ -28,7 +28,9 @@ const HomeScreen = ({ navigation, route }) => {
 
   const scheduleNotification = async (habit) => {
     if (!habit.completed) {
+      const notificationId = habit.name;
       await Notifications.scheduleNotificationAsync({
+        identifier: notificationId,
         content: {
           title: "Habit Reminder",
           body: `Don't forget to complete your habit: ${habit.name}`,
@@ -44,12 +46,20 @@ const HomeScreen = ({ navigation, route }) => {
 
   const markHabitAsCompleted = (habitName) => {
     setSelectedHabits(prevHabits =>
-      prevHabits.map(habit =>
-        habit.name === habitName ? { ...habit, completed: true } : habit
-      )
+      prevHabits.map(habit => {
+        if (habit.name === habitName) {
+          cancelNotification(habitName); 
+          return { ...habit, completed: true };
+        } 
+        return habit;
+      })
     );
   };
 
+  const cancelNotification = async (notificationId) => {
+    await Notifications.cancelScheduledNotificationAsync(notificationId);
+  };
+  
   return (
     <View style={styles.container}>
       <ButtonComponent onPress={() => navigation.navigate('Habitoptions')}>
