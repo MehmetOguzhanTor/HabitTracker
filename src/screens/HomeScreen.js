@@ -17,22 +17,37 @@ const HomeScreen = ({ navigation, route }) => {
 
     requestPermissions();
 
-    if (route.params?.selectedHabit && !selectedHabits.includes(route.params.selectedHabit)) {
-      setSelectedHabits(prevHabits => {
-        scheduleNotification(route.params.selectedHabit);
-        return [...prevHabits, route.params.selectedHabit];
-      });
+    if (route.params?.selectedHabit) {
+      const newHabit = { name: route.params.selectedHabit, completed: false };
+      if (!selectedHabits.some(habit => habit.name === newHabit.name)) {
+        setSelectedHabits(prevHabits => [...prevHabits, newHabit]);
+        scheduleNotification(newHabit); 
+      }
     }
   }, [route.params?.selectedHabit]);
 
   const scheduleNotification = async (habit) => {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Habit Reminder",
-        body: `Don't forget to complete your habit: ${habit}`,
-      },
-      trigger: { seconds: 60*60 }, // 1 hour
-    });
+    if (!habit.completed) {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Habit Reminder",
+          body: `Don't forget to complete your habit: ${habit.name}`,
+        },
+        trigger: { 
+        seconds: 60,
+        repeats: true
+        },
+        
+      });
+    }
+  };
+
+  const markHabitAsCompleted = (habitName) => {
+    setSelectedHabits(prevHabits =>
+      prevHabits.map(habit =>
+        habit.name === habitName ? { ...habit, completed: true } : habit
+      )
+    );
   };
 
   return (
@@ -46,7 +61,7 @@ const HomeScreen = ({ navigation, route }) => {
       <Text style={styles.buttonTextStyle}></Text>
       <Text style={styles.buttonTextStyle}></Text>
         {selectedHabits.map((habit, index) => (
-          <HabitButton key={index} habitName={habit} />
+          <HabitButton key={index} habitName={habit.name} onCompleted={() => markHabitAsCompleted(habit.name)} />
         ))}
       </ScrollView>
     </View>

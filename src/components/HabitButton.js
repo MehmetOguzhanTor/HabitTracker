@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const HabitButton = ({ habitName }) => {
-    const [isPressed, setIsPressed] = useState(false);
+const HabitButton = ({ habitName, onCompleted }) => {
+    const [isCompleted, setIsCompleted] = useState(false);
 
     const handlePress = () => {
-        setIsPressed(!isPressed);
+        setIsCompleted(!isCompleted); // Toggle the completion status
+        if (onCompleted) {
+            onCompleted();
+        }
     };
 
     return (
         <TouchableOpacity 
             onPress={handlePress} 
-            style={[styles.button, isPressed ? styles.pressed : null]}
+            style={[styles.button, isCompleted ? styles.completed : null]}
         >
             <Text style={styles.habitName}>{habitName}</Text>
         </TouchableOpacity>
@@ -25,15 +28,14 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 10,
         borderRadius: 10,
-        backgroundColor: 'red',
+        backgroundColor: 'red', // Red for not completed
     },
-    pressed: {
-        backgroundColor: 'green',
+    completed: {
+        backgroundColor: 'green', // Green for completed
     },
     habitName: {
-        color: 'black',
+        color: 'white',
         fontSize: 16,
-        marginTop: 5, 
     },
 });
 
