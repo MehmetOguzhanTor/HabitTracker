@@ -16,16 +16,31 @@ const HomeScreen = ({ navigation, route }) => {
     }
 
     requestPermissions();
-
+    
     if (route.params?.selectedHabit) {
-      const newHabit = { name: route.params.selectedHabit, completed: false };
+      const newHabit = { 
+      name: route.params.selectedHabit, 
+      completed: false, 
+      selectedAt: new Date().getTime()
+      };
       if (!selectedHabits.some(habit => habit.name === newHabit.name)) {
         setSelectedHabits(prevHabits => [...prevHabits, newHabit]);
         scheduleNotification(newHabit); 
       }
     }
+
+    const intervalId = setInterval(() => {
+      resetHabitStatus();
+    }, 10000); // Check every 10 seconds
+  
+    return () => clearInterval(intervalId);
+
   }, [route.params?.selectedHabit]);
 
+  const isHabitInProgress = (habitName) => {
+    return false; 
+  };
+  
   const scheduleNotification = async (habit) => {
     if (!habit.completed) {
       const notificationId = habit.name;
@@ -46,11 +61,24 @@ const HomeScreen = ({ navigation, route }) => {
 
   const markHabitAsCompleted = (habitName) => {
     setSelectedHabits(prevHabits =>
+        prevHabits.map(habit => {
+            if (habit.name === habitName) {
+                return { ...habit, completed: !habit.completed };
+            }
+            return habit;
+        })
+    );
+};
+
+  const resetHabitStatus = () => {
+    const resetInterval = 60 * 60 * 1000; // 1 hour in milliseconds
+    const currentTime = new Date().getTime();
+  
+    setSelectedHabits(prevHabits =>
       prevHabits.map(habit => {
-        if (habit.name === habitName) {
-          cancelNotification(habitName); 
-          return { ...habit, completed: true };
-        } 
+        if (currentTime - habit.selectedAt > resetInterval) {
+          return { ...habit, completed: false, selectedAt: currentTime }; // Reset and update the timestamp
+        }
         return habit;
       })
     );
@@ -59,7 +87,7 @@ const HomeScreen = ({ navigation, route }) => {
   const cancelNotification = async (notificationId) => {
     await Notifications.cancelScheduledNotificationAsync(notificationId);
   };
-  
+
   return (
     <View style={styles.container}>
       <ButtonComponent onPress={() => navigation.navigate('Habitoptions')}>
@@ -71,7 +99,12 @@ const HomeScreen = ({ navigation, route }) => {
       <Text style={styles.buttonTextStyle}></Text>
       <Text style={styles.buttonTextStyle}></Text>
         {selectedHabits.map((habit, index) => (
-          <HabitButton key={index} habitName={habit.name} onCompleted={() => markHabitAsCompleted(habit.name)} />
+          <HabitButton 
+            key={index} 
+            habitName={habit.name}
+            isCompleted={habit.completed}
+            onCompleted={() => markHabitAsCompleted(habit.name)}
+          />
         ))}
       </ScrollView>
     </View>
