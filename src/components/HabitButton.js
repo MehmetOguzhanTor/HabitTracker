@@ -16,18 +16,17 @@ const HabitButton = ({ habitName, onCompleted, isCompleted, onDelete }) => {
     
     return (
         <View style={styles.habitContainer}>
-            <TouchableOpacity onPress={handleDelete} style={styles.deleteButton}>
-                <Text style={styles.deleteButtonText}>Delete</Text>
-            </TouchableOpacity>
-
             <TouchableOpacity 
-                onPress={handlePress}
+                onPress={onCompleted} 
                 style={[
                     styles.button,
                     isCompleted ? styles.completed : styles.notCompleted
                 ]}
             >
                 <Text style={styles.habitName}>{habitName}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => onDelete(habitName)} style={styles.deleteButton}>
+                <Text style={styles.deleteButtonText}>X</Text>
             </TouchableOpacity>
         </View>
     );
@@ -36,10 +35,33 @@ const HabitButton = ({ habitName, onCompleted, isCompleted, onDelete }) => {
 const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
+        flex: 1,
         justifyContent: 'center',
         padding: 10,
+        paddingVertical: 15,
         margin: 10,
-        borderRadius: 10,
+        borderRadius: 20,
+        backgroundColor: 'red',
+    },
+    habitContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        margin: 15,
+    },
+    deleteButton: {
+        backgroundColor: 'red',
+        width: 30,
+        height: 30,
+        borderRadius: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 10,
+    },
+    deleteButtonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
     notCompleted: {
         backgroundColor: 'red', // Red for not completed
@@ -52,7 +74,8 @@ const styles = StyleSheet.create({
     },
     habitName: {
         color: 'white',
-        fontSize: 16,
+        fontSize: 20,
+        fontWeight: 'bold',
     },
 });
 
