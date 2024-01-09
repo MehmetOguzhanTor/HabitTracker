@@ -18,10 +18,12 @@ const HomeScreen = ({ navigation, route }) => {
     requestPermissions();
     
     if (route.params?.selectedHabit) {
+      const interval = route.params.interval || 3600;
       const newHabit = { 
         name: route.params.selectedHabit, 
         completed: false, 
-        selectedAt: new Date().getTime()
+        selectedAt: new Date().getTime(),
+        interval
       };
       if (!selectedHabits.some(habit => habit.name === newHabit.name)) {
         scheduleNotification(newHabit).then(notificationId => {
@@ -36,7 +38,7 @@ const HomeScreen = ({ navigation, route }) => {
   
     return () => clearInterval(intervalId);
 
-  }, [route.params?.selectedHabit]);
+  }, [route.params?.selectedHabit,route.params?.interval]);
 
   const isHabitInProgress = (habitName) => {
     return false; 
@@ -50,7 +52,7 @@ const HomeScreen = ({ navigation, route }) => {
         body: `Don't forget to complete your habit: ${habit.name}`,
       },
       trigger: { 
-        seconds: 60,
+        seconds: habit.interval*60,
         repeats: true
       },
     });
