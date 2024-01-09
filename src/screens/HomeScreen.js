@@ -46,6 +46,10 @@ const HomeScreen = ({ navigation, route }) => {
     return false; 
   };
 
+  const deleteHabit = (habitName) => {
+    setSelectedHabits(prevHabits => prevHabits.filter(habit => habit.name !== habitName));
+  };
+
   const scheduleNotification = async (habit) => {
   if (!habit.completed) {
     const notificationId = await Notifications.scheduleNotificationAsync({
@@ -109,6 +113,7 @@ const markHabitAsCompleted = (habitName) => {
             habitName={habit.name}
             isCompleted={habit.completed}
             onCompleted={() => markHabitAsCompleted(habit.name)}
+            onDelete={deleteHabit}
           />
         ))}
       </ScrollView>

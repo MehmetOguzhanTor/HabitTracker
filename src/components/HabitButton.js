@@ -1,23 +1,35 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const HabitButton = ({ habitName, onCompleted, isCompleted }) => {
+const HabitButton = ({ habitName, onCompleted, isCompleted, onDelete }) => {
     const handlePress = () => {
         if (onCompleted) {
             onCompleted();
         }
     };
 
+    const handleDelete = () => {
+        if (onDelete) {
+            onDelete(habitName);
+        }
+    };
+    
     return (
-        <TouchableOpacity 
-            onPress={handlePress} 
-            style={[
-                styles.button,
-                isCompleted ? styles.completed : styles.notCompleted
-            ]}
-        >
-            <Text style={styles.habitName}>{habitName}</Text>
-        </TouchableOpacity>
+        <View style={styles.habitContainer}>
+            <TouchableOpacity onPress={handleDelete} style={styles.deleteButton}>
+                <Text style={styles.deleteButtonText}>Delete</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity 
+                onPress={handlePress}
+                style={[
+                    styles.button,
+                    isCompleted ? styles.completed : styles.notCompleted
+                ]}
+            >
+                <Text style={styles.habitName}>{habitName}</Text>
+            </TouchableOpacity>
+        </View>
     );
 };
 
