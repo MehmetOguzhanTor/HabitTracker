@@ -22,9 +22,9 @@ const Habitoptions = ({ navigation }) => {
       setSelectedHabit(newHabit.trim());
       setNewHabit('');
   };
-  const handleIntervalConfirm = (interval) => {
+  const handleIntervalConfirm = (reminderInterval, resetInterval) => {
     setIsModalVisible(false);
-    navigation.navigate('Home', { selectedHabit, interval });
+    navigation.navigate('Home', { selectedHabit, reminderInterval, resetInterval });
   };
 
   return (

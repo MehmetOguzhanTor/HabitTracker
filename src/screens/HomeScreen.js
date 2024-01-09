@@ -18,12 +18,14 @@ const HomeScreen = ({ navigation, route }) => {
     requestPermissions();
     
     if (route.params?.selectedHabit) {
-      const interval = route.params.interval || 3600;
+      const reminderInterval = route.params.reminderInterval || 60;
+      const resetInterval = route.params.resetInterval || 60;
       const newHabit = { 
         name: route.params.selectedHabit, 
         completed: false, 
         selectedAt: new Date().getTime(),
-        interval
+        reminderInterval,
+        resetInterval
       };
       if (!selectedHabits.some(habit => habit.name === newHabit.name)) {
         scheduleNotification(newHabit).then(notificationId => {
@@ -38,7 +40,7 @@ const HomeScreen = ({ navigation, route }) => {
   
     return () => clearInterval(intervalId);
 
-  }, [route.params?.selectedHabit,route.params?.interval]);
+  }, [route.params?.selectedHabit, route.params?.reminderInterval, route.params?.resetInterval]);
 
   const isHabitInProgress = (habitName) => {
     return false; 
@@ -52,7 +54,7 @@ const HomeScreen = ({ navigation, route }) => {
         body: `Don't forget to complete your habit: ${habit.name}`,
       },
       trigger: { 
-        seconds: habit.interval*60,
+        seconds: habit.reminderInterval *60,
         repeats: true
       },
     });
@@ -72,14 +74,12 @@ const markHabitAsCompleted = (habitName) => {
   );
 };
 
-
   const resetHabitStatus = () => {
-    const resetInterval = 60 * 60 * 1000; // 1 hour in milliseconds
     const currentTime = new Date().getTime();
   
     setSelectedHabits(prevHabits =>
       prevHabits.map(habit => {
-        if (currentTime - habit.selectedAt > resetInterval) {
+        if (currentTime - habit.selectedAt > habit.resetInterval*60*1000) {
           return { ...habit, completed: false, selectedAt: currentTime }; // Reset and update the timestamp
         }
         return habit;
