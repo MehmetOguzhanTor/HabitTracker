@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 import { Modal, View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
 const IntervalModal = ({ isVisible, onConfirm, onCancel }) => {
-  const [interval, setInterval] = useState('');
+  const [reminderInterval, setReminderInterval] = useState('');
+  const [resetInterval, setResetInterval] = useState('');
 
   const handleConfirm = () => {
-    const intervalNum = parseInt(interval);
-    if (!isNaN(intervalNum) && intervalNum > 0) {
-      onConfirm(intervalNum);
+    const reminderIntervalNum = parseInt(reminderInterval);
+    const resetIntervalNum = parseInt(resetInterval);
+    if (!isNaN(reminderIntervalNum) && reminderIntervalNum > 0 &&
+        !isNaN(resetIntervalNum) && resetIntervalNum > 0) {
+      onConfirm(reminderIntervalNum, resetIntervalNum);
     } else {
-      alert('Please enter a valid number');
+      alert('Please enter valid numbers');
     }
   };
 
@@ -20,8 +23,15 @@ const IntervalModal = ({ isVisible, onConfirm, onCancel }) => {
           <Text>Set Reminder Interval (in minutes):</Text>
           <TextInput
             style={styles.input}
-            onChangeText={setInterval}
-            value={interval}
+            onChangeText={setReminderInterval}
+            value={reminderInterval}
+            keyboardType="numeric"
+          />
+          <Text>Set Reset Interval (in minutes):</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={setResetInterval}
+            value={resetInterval}
             keyboardType="numeric"
           />
           <Button title="Confirm" onPress={handleConfirm} />
