@@ -19,7 +19,7 @@ const HabitButton = ({ habitName, onCompleted, isCompleted, onDelete }) => {
             <TouchableOpacity onPress={handleDelete} style={styles.deleteButton}>
                 <Text style={styles.deleteButtonText}>Delete</Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity 
                 onPress={handlePress}
                 style={[
@@ -32,7 +32,6 @@ const HabitButton = ({ habitName, onCompleted, isCompleted, onDelete }) => {
         </View>
     );
 };
-
 
 const styles = StyleSheet.create({
     button: {

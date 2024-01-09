@@ -46,9 +46,13 @@ const HomeScreen = ({ navigation, route }) => {
     return false; 
   };
 
-  const deleteHabit = (habitName) => {
-    setSelectedHabits(prevHabits => prevHabits.filter(habit => habit.name !== habitName));
-  };
+  const deleteHabit = async (habitName) => {
+    const habitToDelete = selectedHabits.find(habit => habit.name === habitName);
+    if (habitToDelete && habitToDelete.notificationId) {
+        await Notifications.cancelScheduledNotificationAsync(habitToDelete.notificationId);
+    }
+    setSelectedHabits(selectedHabits.filter(habit => habit.name !== habitName));
+};
 
   const scheduleNotification = async (habit) => {
   if (!habit.completed) {
