@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Button } from 'react-native';
+import IntervalModal from './IntervalModal';
 
 const habitCategories = {
   'Health and Fitness': ['Exercise', 'Morning Stretching', 'Walk', 'Eat Healthy', 'Cycle', 'Swim', 'Work Out', 'Brush Your Teeth', ],
@@ -12,13 +13,18 @@ const habitCategories = {
 const Habitoptions = ({ navigation }) => {
   const [newHabit, setNewHabit] = useState('');
   const [expandedCategory, setExpandedCategory] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedHabit, setSelectedHabit] = useState('');
+
   const addNewHabit = () => {
     if (newHabit.trim() === '') return;
-      const newId = options.length + 1;
-
-    setOptions([...options, { id: newId, name: newHabit }]);
-    setNewHabit('');
-    navigation.navigate('Home', { selectedHabit: newHabit.trim() });
+      setIsModalVisible(true);
+      setSelectedHabit(newHabit.trim());
+      setNewHabit('');
+  };
+  const handleIntervalConfirm = (interval) => {
+    setIsModalVisible(false);
+    navigation.navigate('Home', { selectedHabit, interval });
   };
 
   return (
@@ -41,12 +47,23 @@ const Habitoptions = ({ navigation }) => {
             <Text style={styles.category}>{category}</Text>
           </TouchableOpacity>
           {expandedCategory === category && habits.map((habit, index) => (
-            <TouchableOpacity key={index} style={styles.optionItem} onPress={() => navigation.navigate('Home', { selectedHabit: habit })}>
-              <Text style={styles.optionText}>{habit}</Text>
-            </TouchableOpacity>
+            <TouchableOpacity
+            key={index}
+            style={styles.optionItem}
+            onPress={() => {
+              setIsModalVisible(true);
+              setSelectedHabit(habit);
+            }}>
+            <Text style={styles.optionText}>{habit}</Text>
+          </TouchableOpacity>
           ))}
         </View>
       ))}
+      <IntervalModal
+        isVisible={isModalVisible}
+        onConfirm={handleIntervalConfirm}
+        onCancel={() => setIsModalVisible(false)}
+      />
     </ScrollView>
   );
 };
