@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
 
 const HabitButton = ({ habitName, onCompleted, isCompleted, onDelete }) => {
     const handlePress = () => {
@@ -9,9 +9,20 @@ const HabitButton = ({ habitName, onCompleted, isCompleted, onDelete }) => {
     };
 
     const handleDelete = () => {
-        if (onDelete) {
-            onDelete(habitName);
-        }
+        Alert.alert(
+            "Delete Habit",
+            `Are you sure you want to delete the habit "${habitName}"?`,
+            [
+                {
+                    text: "CANCEL",
+                    style: "cancel"
+                },
+                { 
+                    text: "YES", 
+                    onPress: () => onDelete(habitName) 
+                }
+            ]
+        );
     };
     
     return (
@@ -25,7 +36,7 @@ const HabitButton = ({ habitName, onCompleted, isCompleted, onDelete }) => {
             >
                 <Text style={styles.habitName}>{habitName}</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => onDelete(habitName)} style={styles.deleteButton}>
+            <TouchableOpacity onPress={handleDelete} style={styles.deleteButton}>
                 <Text style={styles.deleteButtonText}>X</Text>
             </TouchableOpacity>
         </View>
