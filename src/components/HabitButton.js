@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
 
-const HabitButton = ({ habitName, onCompleted, isCompleted, onDelete }) => {
+const HabitButton = ({ habitName, onLongPressCompleted, onCompleted, isCompleted, onDelete }) => {
     const handlePress = () => {
         if (onCompleted) {
             onCompleted();
@@ -19,7 +19,7 @@ const HabitButton = ({ habitName, onCompleted, isCompleted, onDelete }) => {
                 },
                 { 
                     text: "YES", 
-                    onPress: () => onDelete(habitName) 
+                    onLongPress: () => onDelete(habitName) 
                 }
             ]
         );
@@ -28,7 +28,7 @@ const HabitButton = ({ habitName, onCompleted, isCompleted, onDelete }) => {
     return (
         <View style={styles.habitContainer}>
             <TouchableOpacity 
-                onPress={onCompleted} 
+                onLongPress={() => onLongPressCompleted(habitName)} 
                 style={[
                     styles.button,
                     isCompleted ? styles.completed : styles.notCompleted

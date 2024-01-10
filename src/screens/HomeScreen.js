@@ -101,6 +101,18 @@ const markHabitAsCompleted = (habitName) => {
     }
   };
   
+  const onLongPressCompleted = (habitName) => {
+    setSelectedHabits(prevHabits =>
+        prevHabits.map(habit => {
+            if (habit.name === habitName) {
+                cancelNotification(habit.notificationId);
+                return { ...habit, completed: !habit.completed };
+            }
+            return habit;
+        })
+    );
+};
+
   return (
     <View style={styles.container}>
       <ButtonComponent onPress={() => navigation.navigate('Habitoptions')}>
@@ -116,6 +128,7 @@ const markHabitAsCompleted = (habitName) => {
             key={index} 
             habitName={habit.name}
             isCompleted={habit.completed}
+            onLongPressCompleted={onLongPressCompleted}
             onCompleted={() => markHabitAsCompleted(habit.name)}
             onDelete={deleteHabit}
           />
