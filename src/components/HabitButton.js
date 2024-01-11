@@ -19,7 +19,7 @@ const HabitButton = ({ habitName, onLongPressCompleted, onCompleted, isCompleted
                 },
                 { 
                     text: "YES", 
-                    onLongPress: () => onDelete(habitName) 
+                    onPress: () => onDelete(habitName) 
                 }
             ]
         );
