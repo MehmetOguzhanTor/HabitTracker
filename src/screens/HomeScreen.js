@@ -116,9 +116,10 @@ const markHabitAsCompleted = (habitName) => {
   return (
     <View style={styles.container}>
       <ButtonComponent onPress={() => navigation.navigate('Habitoptions')}>
-        <Text style={styles.plusStyle}>+</Text>
-        <Text style={styles.buttonTextStyle}></Text>
-        <Text style={styles.buttonTextStyle}>New Habit</Text>
+        <View style={styles.buttonTextContainer}> 
+          <Text style={styles.plusStyle}>+</Text>
+          <Text style={styles.buttonTextStyle}>New Habit</Text>
+        </View>
       </ButtonComponent>
       <ScrollView style={styles.habitsList}>
       <Text style={styles.buttonTextStyle}></Text>
@@ -146,7 +147,6 @@ const styles = StyleSheet.create({
     paddingTop: 20, 
 },
   plusStyle: {
-    marginTop: 5,
     fontSize: 160, 
     alignItems: 'center',
     color: 'white',
@@ -160,8 +160,8 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 5,
     color: 'blue',
+    marginTop: 10
   },
   habitsList: {
     width: '100%', 
