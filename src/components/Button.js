@@ -32,11 +32,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'blue',
     },
+    buttonTextContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    plusStyle: {
+        fontSize: 60,
+        color: 'white',
+    },
     buttonText: {
         color: 'white',
-        fontSize: 20,
-        textAlign: 'center',
-        marginTop: 10
+        fontSize: 20
     },
 });
 
